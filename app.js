@@ -11,13 +11,13 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const app = express();
 
 app.use(express.static("public"));
-app.set("view engine", "ejs");
+app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
 app.use(session({
-  secret: "Our little secret",
+  secret: "Our little secret.",
   resave: false,
   saveUninitialized: false
 }));
@@ -40,7 +40,8 @@ userSchema.plugin(passportLocalMongoose);
 
 const User = new mongoose.model("User", userSchema);
 
-// use static serialize and deserialize of model for passport session support
+passport.use(User.createStrategy());
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
